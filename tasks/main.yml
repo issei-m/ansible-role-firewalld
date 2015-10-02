@@ -1,0 +1,16 @@
+---
+
+- name: ensure firewalld is running/enabled
+  sudo: yes
+  ignore_errors: yes
+  service: name=firewalld enabled=yes state=started
+
+- name: enable service
+  sudo: yes
+  firewalld: service={{ add_service }} permanent=true state=enabled immediate={{ immediate }}
+  when: add_service is defined
+
+- name: enable port
+  sudo: yes
+  firewalld: port={{ add_port }} permanent=true state=enabled immediate={{ immediate }}
+  when: add_port is defined
